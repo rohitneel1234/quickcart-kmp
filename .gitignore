@@ -1,7 +1,24 @@
+# Build artifacts
 .gradle
-/build
-/composeApp/build
+build/
+/*/build/
 .kotlin
 local.properties
+
+# IDE specific
 .idea
 *.iml
+
+# iOS
+iosApp/DerivedData/
+iosApp/build/
+iosApp/.appcode_info/
+iosApp/*.xcworkspace/xcuserdata/
+iosApp/*.xcodeproj/xcuserdata/
+iosApp/*.xcodeproj/project.xcworkspace/xcuserdata/
+.DS_Store
+
+# KMP
+.konan/
+shared/build/
+androidApp/build/
