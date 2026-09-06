@@ -48,7 +48,7 @@ struct ProductDetailView: View {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Product Details")
                                     .font(.headline)
-                                Text(product.description.isEmpty ? "No description available." : product.description)
+                                Text(product.productDescription.isEmpty ? "No description available." : product.productDescription)
                                     .font(.body)
                                     .foregroundColor(.primary)
                                     .lineSpacing(4)
@@ -65,11 +65,11 @@ struct ProductDetailView: View {
                     Divider()
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("$\(String(format: "%.2f", product.price))")
+                            Text("₹\(Int(product.price))")
                                 .font(.title2)
                                 .fontWeight(.bold)
                             if product.mrp > product.price {
-                                Text("$\(String(format: "%.2f", product.mrp))")
+                                Text("₹\(Int(product.mrp))")
                                     .font(.caption)
                                     .strikethrough()
                                     .foregroundColor(.secondary)

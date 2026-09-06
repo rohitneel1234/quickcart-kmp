@@ -1,4 +1,5 @@
 import SwiftUI
+import Shared
 
 struct OrderSuccessView: View {
     let orderId: String
@@ -20,9 +21,9 @@ struct OrderSuccessView: View {
             Spacer()
 
             Button(action: {
-                // Navigate back to root or home
-                // In a simple app, we might just pop
+                CartRepository.shared.clear()
                 NotificationCenter.default.post(name: NSNotification.Name("GoHome"), object: nil)
+                presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Continue Shopping")
                     .frame(maxWidth: .infinity)

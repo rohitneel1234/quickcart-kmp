@@ -151,7 +151,7 @@ object SampleData {
         mrp = mrp,
         emoji = emoji,
         rating = 3.8 + (id.hashCode().mod(12)) / 10.0,
-        description = "$name${brand?.let { " by $it" } ?: ""}, $unit pack. Fresh quality, handpicked and delivered fast.",
+        productDescription = "$name${brand?.let { " by $it" } ?: ""}, $unit pack. Fresh quality, handpicked and delivered fast.",
         deliveryEta = listOf("8 mins", "10 mins", "12 mins", "15 mins")[id.hashCode().mod(4).let { if (it < 0) it + 4 else it }]
     )
 

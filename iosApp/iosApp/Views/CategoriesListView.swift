@@ -2,7 +2,7 @@ import SwiftUI
 import Shared
 
 struct CategoriesListView: View {
-    @State private var categories: [Shared.Category] = []
+    @State private var categories: [Category] = []
 
     let columns = [
         GridItem(.flexible()),
@@ -11,7 +11,7 @@ struct CategoriesListView: View {
         GridItem(.flexible())
     ]
 
-    var sections: [(String, [Shared.Category])] {
+    var sections: [(String, [Category])] {
         let groceryAndKitchenIds = ["fruits_veg", "atta_rice_dal", "masala_oil", "dairy_bread", "bakery", "meat_fish"]
         let snacksAndDrinksIds = ["snacks", "beverages", "tea_coffee", "sweet_namkeen", "frozen"]
 
@@ -39,7 +39,7 @@ struct CategoriesListView: View {
                                             Text(category.emoji)
                                                 .font(.system(size: 30))
                                                 .frame(width: 60, height: 60)
-                                                .background(Color.green.opacity(0.1))
+                                                .background(Color(hex: category.colorHex))
                                                 .cornerRadius(12)
                                             Text(category.name)
                                                 .font(.caption)
@@ -62,3 +62,4 @@ struct CategoriesListView: View {
         }
     }
 }
+
