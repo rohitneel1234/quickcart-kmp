@@ -1,0 +1,7 @@
+.gradle
+/build
+/composeApp/build
+.kotlin
+local.properties
+.idea
+*.iml
