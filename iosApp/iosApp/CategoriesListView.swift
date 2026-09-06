@@ -2,7 +2,7 @@ import SwiftUI
 import Shared
 
 struct CategoriesListView: View {
-    @State private var categories: [Category] = []
+    @State private var categories: [Shared.Category] = []
 
     let columns = [
         GridItem(.flexible()),
@@ -11,7 +11,7 @@ struct CategoriesListView: View {
         GridItem(.flexible())
     ]
 
-    var sections: [(String, [Category])] {
+    var sections: [(String, [Shared.Category])] {
         let groceryAndKitchenIds = ["fruits_veg", "atta_rice_dal", "masala_oil", "dairy_bread", "bakery", "meat_fish"]
         let snacksAndDrinksIds = ["snacks", "beverages", "tea_coffee", "sweet_namkeen", "frozen"]
 

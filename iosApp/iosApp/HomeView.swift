@@ -3,7 +3,7 @@ import Shared
 
 struct HomeView: View {
     @State private var trendingProducts: [Product] = []
-    @State private var categories: [Category] = []
+    @State private var categories: [Shared.Category] = []
 
     let columns = [
         GridItem(.flexible()),

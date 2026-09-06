@@ -3,7 +3,7 @@ import Shared
 
 struct CategoryView: View {
     let categoryId: String
-    @State private var category: Category? = nil
+    @State private var category: Shared.Category? = nil
     @State private var products: [Product] = []
 
     let columns = [
