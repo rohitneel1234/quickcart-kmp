@@ -2,7 +2,7 @@ import SwiftUI
 import Shared
 
 struct CartView: View {
-    @State private var cartLines: [CartLine] = []
+    @ObservedObject private var cartManager = CartManager.shared
 
     private var subtotal: Double {
         CartRepository.shared.subtotal.value as! Double
@@ -13,7 +13,7 @@ struct CartView: View {
     }
 
     private var handlingFee: Double {
-        cartLines.isEmpty ? 0.0 : 4.0
+        cartManager.cartLines.isEmpty ? 0.0 : 4.0
     }
 
     private var grandTotal: Double {
@@ -23,7 +23,7 @@ struct CartView: View {
     var body: some View {
         NavigationView {
             VStack {
-                if cartLines.isEmpty {
+                if cartManager.cartLines.isEmpty {
                     VStack(spacing: 20) {
                         Text("🛒")
                             .font(.system(size: 80))
@@ -35,7 +35,7 @@ struct CartView: View {
                 } else {
                     List {
                         Section {
-                            ForEach(cartLines, id: \.product.id) { line in
+                            ForEach(cartManager.cartLines, id: \.product.id) { line in
                                 HStack {
                                     Text(line.product.emoji)
                                         .font(.system(size: 40))
@@ -95,7 +95,7 @@ struct CartView: View {
                         }
                         .padding(.horizontal)
 
-                        NavigationLink(destination: CheckoutView(cartLines: cartLines, subtotal: grandTotal)) {
+                        NavigationLink(destination: CheckoutView(cartLines: cartManager.cartLines, subtotal: grandTotal)) {
                             Text("Proceed to Checkout")
                                 .frame(maxWidth: .infinity)
                                 .padding()
@@ -110,60 +110,6 @@ struct CartView: View {
                 }
             }
             .navigationTitle("My Cart")
-            .onAppear {
-                observeCart()
-            }
-        }
-    }
-
-    private func observeCart() {
-        // In a real app, use a proper Flow wrapper or Combine
-        self.cartLines = CartRepository.shared.lines.value as! [CartLine]
-
-        // Simple polling/fake observation for demo purposes if not using a library like KMP-NativeCoroutines
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            self.cartLines = CartRepository.shared.lines.value as! [CartLine]
         }
     }
 }
-
-struct BillRow: View {
-    let label: String
-    let value: String
-    var isBold: Bool = false
-
-    var body: some View {
-        HStack {
-            Text(label)
-                .font(.system(size: 14, weight: isBold ? .bold : .regular))
-            Spacer()
-            Text(value)
-                .font(.system(size: 14, weight: isBold ? .bold : .regular))
-        }
-        .padding(.vertical, 2)
-    }
-}
-
-struct BillSummary: View {
-    let subtotal: Double
-    let deliveryFee: Double
-    let handlingFee: Double
-    let total: Double
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Bill Details")
-                .font(.headline)
-
-            BillRow(label: "Items total", value: "₹\(Int(subtotal))")
-            BillRow(label: "Delivery fee", value: deliveryFee == 0 ? "FREE" : "₹\(Int(deliveryFee))")
-            BillRow(label: "Handling fee", value: "₹\(Int(handlingFee))")
-
-            Divider()
-
-            BillRow(label: "Grand total", value: "₹\(Int(total))", isBold: true)
-        }
-        .padding()
-    }
-}
-

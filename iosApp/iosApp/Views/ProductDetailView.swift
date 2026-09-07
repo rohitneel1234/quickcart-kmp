@@ -5,7 +5,7 @@ struct ProductDetailView: View {
     let productId: String
     @Environment(\.presentationMode) var presentationMode
     @State private var product: Product? = nil
-    @State private var quantity: Int = 0
+    @ObservedObject private var cartManager = CartManager.shared
 
     var body: some View {
         VStack(spacing: 0) {
@@ -63,6 +63,7 @@ struct ProductDetailView: View {
                 // Bottom Bar
                 VStack {
                     Divider()
+                    let quantity = cartManager.qtyFor(productId: productId)
                     HStack {
                         VStack(alignment: .leading) {
                             Text("₹\(Int(product.price))")
@@ -81,7 +82,6 @@ struct ProductDetailView: View {
                         if quantity == 0 {
                             Button(action: {
                                 CartRepository.shared.add(product: product)
-                                updateQuantity()
                             }) {
                                 Text("Add to Cart")
                                     .fontWeight(.bold)
@@ -96,7 +96,6 @@ struct ProductDetailView: View {
                                 HStack {
                                     Button(action: {
                                         CartRepository.shared.remove(product: product)
-                                        updateQuantity()
                                     }) {
                                         Image(systemName: "minus.circle.fill")
                                             .foregroundColor(.green)
@@ -109,7 +108,6 @@ struct ProductDetailView: View {
 
                                     Button(action: {
                                         CartRepository.shared.add(product: product)
-                                        updateQuantity()
                                     }) {
                                         Image(systemName: "plus.circle.fill")
                                             .foregroundColor(.green)
@@ -132,11 +130,6 @@ struct ProductDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             self.product = GroceryRepository.shared.getProduct(id: productId)
-            updateQuantity()
         }
-    }
-
-    private func updateQuantity() {
-        self.quantity = Int(CartRepository.shared.quantityOf(productId: productId))
     }
 }
