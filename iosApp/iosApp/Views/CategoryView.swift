@@ -18,7 +18,7 @@ struct CategoryView: View {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(products, id: \.id) { product in
                             NavigationLink(destination: ProductDetailView(productId: product.id)) {
-                                ProductCard(product: product)
+                                ProductCard(product: product, quantity: qtyFor(productId: product.id))
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
