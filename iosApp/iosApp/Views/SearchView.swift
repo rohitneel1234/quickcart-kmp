@@ -4,6 +4,7 @@ import Shared
 struct SearchView: View {
     @State private var query: String = ""
     @State private var results: [Product] = []
+    @ObservedObject private var cartManager = CartManager.shared
 
     let columns = [
         GridItem(.flexible()),
@@ -42,7 +43,7 @@ struct SearchView: View {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(results, id: \.id) { product in
                             NavigationLink(destination: ProductDetailView(productId: product.id)) {
-                                ProductCard(product: product)
+                                ProductCard(product: product, quantity: cartManager.qtyFor(productId: product.id))
                             }
                             .buttonStyle(PlainButtonStyle())
                         }

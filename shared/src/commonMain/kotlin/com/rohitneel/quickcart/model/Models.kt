@@ -17,7 +17,7 @@ data class Product(
     val mrp: Double,
     val emoji: String,
     val rating: Double = 4.2,
-    val description: String = "",
+    val productDescription: String = "",
     val deliveryEta: String = "8 mins"
 ) {
     val discountPercent: Int

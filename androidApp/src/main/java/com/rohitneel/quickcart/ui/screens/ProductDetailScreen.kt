@@ -105,7 +105,7 @@ fun ProductDetailScreen(
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = product.description.ifBlank { "No description available." },
+                    text = product.productDescription.ifBlank { "No description available." },
                     style = MaterialTheme.typography.bodyLarge,
                     color = BrandColors.TextPrimary,
                     lineHeight = 22.sp

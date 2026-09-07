@@ -22,15 +22,15 @@ struct CheckoutView: View {
                             Text("\(line.quantity)x \(line.product.name)")
                                 .font(.body)
                             Spacer()
-                            Text("$\(String(format: "%.2f", line.lineTotal))")
+                            Text("₹\(Int(line.lineTotal))")
                                 .font(.body)
                         }
                     }
                     HStack {
-                        Text("Subtotal")
+                        Text("Grand Total")
                             .fontWeight(.bold)
                         Spacer()
-                        Text("$\(String(format: "%.2f", subtotal))")
+                        Text("₹\(Int(subtotal))")
                             .fontWeight(.bold)
                     }
                 }
@@ -38,17 +38,17 @@ struct CheckoutView: View {
 
             Button(action: {
                 let order = OrderRepository.shared.placeOrder(lines: cartLines, total: subtotal, address: address)
-                CartRepository.shared.clear()
                 self.orderId = order.id
                 self.navigateToSuccess = true
             }) {
-                Text("Place Order - $\(String(format: "%.2f", subtotal))")
+                Text("Place Order - ₹\(Int(subtotal))")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.green)
                     .foregroundColor(.white)
                     .cornerRadius(12)
             }
+
             .padding()
 
             NavigationLink(destination: OrderSuccessView(orderId: orderId ?? ""), isActive: $navigateToSuccess) {

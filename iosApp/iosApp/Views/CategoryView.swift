@@ -3,8 +3,9 @@ import Shared
 
 struct CategoryView: View {
     let categoryId: String
-    @State private var category: Category? = nil
+    @State private var category: Shared.Category? = nil
     @State private var products: [Product] = []
+    @ObservedObject private var cartManager = CartManager.shared
 
     let columns = [
         GridItem(.flexible()),
@@ -18,7 +19,7 @@ struct CategoryView: View {
                     LazyVGrid(columns: columns, spacing: 15) {
                         ForEach(products, id: \.id) { product in
                             NavigationLink(destination: ProductDetailView(productId: product.id)) {
-                                ProductCard(product: product)
+                                ProductCard(product: product, quantity: cartManager.qtyFor(productId: product.id))
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
